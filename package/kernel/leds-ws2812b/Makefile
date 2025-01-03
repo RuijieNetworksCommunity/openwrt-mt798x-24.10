@@ -20,7 +20,6 @@ define KernelPackage/leds-ws2812b
   FILES:= \
 	$(PKG_BUILD_DIR)/leds-ws2812b.ko
   AUTOLOAD:=$(call AutoProbe,leds-ws2812b,1)
-  DEPENDS:=@TARGET_mediatek_filogic
 endef
 
 define KernelPackage/leds-ws2812b/description

@@ -2,7 +2,7 @@
 .DS_Store
 .*.swp
 /env
-/dl
+/dl/*
 /.config
 /.config.old
 /.toolchain_build_ver
@@ -35,3 +35,15 @@ git-src
 .cproject
 .ccache
 .vscode*
+!/dl/datconf-6bb733f7.tar.bz2
+!/dl/datconf-757f9679.tar.bz2
+!/dl/warp_20220425-d15d0a-obj.tar.xz
+!/dl/warp_20221209-3e6ae1-src.tar.xz
+!/dl/warp_20231229-5f71ec.tar.xz
+!/dl/mt798x-7.6.6.1-src.tar.xz
+!/dl/mt7981-7.6.7.0-20221209-b9c02f-obj.tar.xz
+!/dl/mt7986-7.6.7.0-20221209-b9c02f-obj.tar.xz
+!/dl/mt79xx_conninfra_20231229-f2fa25.tar.xz
+!/dl/mt7981_20220425-4c770b-obj.tar.xz
+!/dl/mt79xx_20231229-4012a0.tar.xz
+!/dl/mt79xx_20220907-8b55f5.tar.xz

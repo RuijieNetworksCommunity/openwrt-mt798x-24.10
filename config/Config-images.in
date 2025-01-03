@@ -12,12 +12,6 @@ menu "Target Images"
 
 		choice
 			prompt "Compression"
-			default TARGET_INITRAMFS_COMPRESSION_LZMA if TARGET_apm821xx
-			default TARGET_INITRAMFS_COMPRESSION_LZMA if TARGET_ath79_mikrotik
-			default TARGET_INITRAMFS_COMPRESSION_LZMA if TARGET_lantiq
-			default TARGET_INITRAMFS_COMPRESSION_LZMA if TARGET_mpc85xx
-			default TARGET_INITRAMFS_COMPRESSION_LZMA if TARGET_ramips
-			default TARGET_INITRAMFS_COMPRESSION_ZSTD if TARGET_qualcommax
 			default TARGET_INITRAMFS_COMPRESSION_XZ if USES_SEPARATE_INITRAMFS
 			default TARGET_INITRAMFS_COMPRESSION_NONE
 			depends on TARGET_ROOTFS_INITRAMFS
@@ -195,26 +189,6 @@ menu "Target Images"
 			prompt "journal size" if TARGET_ROOTFS_UBIFS
 			default ""
 
-	config GRUB_IMAGES
-		bool "Build GRUB images (Linux x86 or x86_64 host only)"
-		depends on TARGET_x86
-		depends on TARGET_ROOTFS_EXT4FS || TARGET_ROOTFS_JFFS2 || TARGET_ROOTFS_SQUASHFS
-		select PACKAGE_grub2
-		select PACKAGE_grub2-bios-setup
-		default y
-
-	config GRUB_EFI_IMAGES
-		bool "Build GRUB EFI images"
-		depends on TARGET_x86 || TARGET_armsr || TARGET_loongarch64
-		depends on TARGET_ROOTFS_EXT4FS || TARGET_ROOTFS_JFFS2 || TARGET_ROOTFS_SQUASHFS
-		select PACKAGE_grub2 if TARGET_x86
-		select PACKAGE_grub2-efi if TARGET_x86
-		select PACKAGE_grub2-bios-setup if TARGET_x86
-		select PACKAGE_grub2-efi-arm if TARGET_armsr
-		select PACKAGE_grub2-efi-loongarch64 if TARGET_loongarch64
-		select PACKAGE_kmod-fs-vfat
-		default y
-
 	config GRUB_CONSOLE
 		bool "Use Console Terminal (in addition to Serial)"
 		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
@@ -223,7 +197,6 @@ menu "Target Images"
 	config GRUB_BAUDRATE
 		int "Serial port baud rate"
 		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
-		default 38400 if TARGET_x86_generic
 		default 115200
 
 	config GRUB_FLOWCONTROL
@@ -252,37 +225,9 @@ menu "Target Images"
 		  This is the title of the GRUB menu entry.
 		  If unspecified, it defaults to OpenWrt.
 
-	config ISO_IMAGES
-		bool "Build LiveCD image (ISO)"
-		depends on TARGET_x86
-		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
-
-	config VDI_IMAGES
-		bool "Build VirtualBox image files (VDI)"
-		depends on TARGET_x86
-		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
-		select PACKAGE_kmod-e1000
-
-	config VMDK_IMAGES
-		bool "Build VMware image files (VMDK)"
-		depends on TARGET_x86 || TARGET_armsr
-		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
-		select PACKAGE_kmod-e1000
-
-	config VHDX_IMAGES
-		bool "Build Hyper-V image files (VHDX)"
-		depends on TARGET_x86
-		depends on GRUB_IMAGES || GRUB_EFI_IMAGES
-		select PACKAGE_kmod-e1000
-
-	config TARGET_SERIAL
-		string "Serial port device"
-		depends on TARGET_x86 || TARGET_armsr || TARGET_loongarch64
-		default "ttyS0"
-
 	config TARGET_IMAGES_GZIP
 		bool "GZip images"
-		depends on TARGET_ROOTFS_EXT4FS || TARGET_x86 || TARGET_armsr || TARGET_malta || TARGET_loongarch64
+		depends on TARGET_ROOTFS_EXT4FS
 		default y
 
 	comment "Image Options"
@@ -293,15 +238,11 @@ menu "Target Images"
 	config TARGET_KERNEL_PARTSIZE
 		int "Kernel partition size (in MiB)"
 		depends on USES_BOOT_PART
-		default 8 if TARGET_apm821xx_sata
-		default 64 if TARGET_bcm27xx
-		default 128 if TARGET_armsr
 		default 16
 
 	config TARGET_ROOTFS_PARTSIZE
 		int "Root filesystem partition size (in MiB)"
 		depends on USES_ROOTFS_PART || TARGET_ROOTFS_EXT4FS
-		default 232 if TARGET_loongarch64
 		default 448 if TARGET_mediatek
 		default 104
 		help

@@ -1,0 +1,21 @@
+--- a/root/usr/share/firewall4/templates/ruleset.uc
++++ b/root/usr/share/firewall4/templates/ruleset.uc
+@@ -23,7 +23,6 @@
+ 		devices = {{ fw4.set(flowtable_devices, true) }};
+ 		counter;
+ {% if (fw4.default_option("flow_offloading_hw")): %}
+-		flags offload;
+ {% endif %}
+ 	}
+ 
+--- a/root/usr/share/ucode/fw4.uc
++++ b/root/usr/share/ucode/fw4.uc
+@@ -538,8 +538,7 @@
+ 	},
+ 
+ 	resolve_offload_devices: function() {
+-		if (!this.default_option("flow_offloading"))
+-			return [];
++		return [];
+ 
+ 		let devices = this.resolve_hw_offload_devices();
